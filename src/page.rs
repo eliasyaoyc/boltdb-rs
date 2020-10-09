@@ -144,6 +144,11 @@ impl PgIds {
     pub fn push(&mut self, pgid: PgId) {
         self.inner.push(pgid);
     }
+
+    #[inline]
+    pub fn insert(&mut self, index: usize, pgid: PgId) {
+        self.inner.insert(index, pgid);
+    }
 }
 
 #[test]

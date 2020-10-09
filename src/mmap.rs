@@ -14,8 +14,11 @@ pub fn mmap(mut db: DB, mmap_size: usize) -> ::std::io::Result<DB> {
 
 #[test]
 fn it_works() {
-    let file = File::open("Cargo.toml").unwrap();
+    let buffer = "hello word".as_bytes();
+    let mut file = tempfile::tempfile().unwrap();
+    file.write_all(buffer);
     let mut opt = MmapOptions::new();
-    let mmap = unsafe { MmapOptions::new().map(&file).unwrap() };
-    println!("{:#?}", String::from_utf8_lossy(&mmap[0..199]));
+    let mut mmap = unsafe { MmapOptions::new().map(&file).unwrap() };
+    assert_eq!(buffer, mmap.as_ref());
+    // println!("{:#?}", String::from_utf8_lossy(&mmap[0..buffer.len()]));
 }
